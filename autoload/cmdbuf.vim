@@ -36,17 +36,22 @@ endfunc "}}}
 
 " Assumption: This function is called in normal mode.
 func! cmdbuf#execute(cmdtype) "{{{
-    call s:insert_cmdline(a:cmdtype, getline(1) . "\<CR>")
+    for lnum in range(1, line('$'))
+        call s:insert_cmdline(a:cmdtype, getline(lnum) . "\<CR>")
+    endfor
+    close!
 endfunc "}}}
 
 " Assumption: This function is called in normal mode.
 func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
-    call s:insert_cmdline(a:cmdtype, getline(1))
+    for lnum in range(1, line('$'))
+        call s:insert_cmdline(a:cmdtype, getline(lnum))
+    endfor
+    close!
 endfunc "}}}
 
 
 func! s:insert_cmdline(cmdtype, insert_str) "{{{
-    close!
     if a:cmdtype =~# '^[:/?]$'
         call feedkeys(a:cmdtype . a:insert_str, 'n')
     else
