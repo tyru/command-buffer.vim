@@ -58,14 +58,15 @@ endfunc "}}}
 
 
 func! s:create_jump_buffer() "{{{
-    let winnr = bufwinnr(g:cmdbuf_buffer_name)
+    let BUF_NAME = '__command_buffer__'
+    let winnr = bufwinnr(BUF_NAME)
     if winnr == -1
         " Create (and jump to) buffer.
         execute printf('%d%s', g:cmdbuf_buffer_size, g:cmdbuf_open_command)
         " Name current buffer.
-        file `=g:cmdbuf_buffer_name`
+        file `=BUF_NAME`
         " Execute BufEnter autocmd.
-        execute 'doautocmd BufEnter' g:cmdbuf_buffer_name
+        execute 'doautocmd BufEnter' BUF_NAME
     else
         execute winnr . 'wincmd w'
     endif

@@ -19,9 +19,6 @@ endif
 if !exists('g:cmdbuf_no_default_autocmd')
     let g:cmdbuf_no_default_autocmd = 0
 endif
-if !exists('g:cmdbuf_buffer_name')
-    let g:cmdbuf_buffer_name = '__command_buffer__'
-endif
 if !exists('g:cmdbuf_buffer_size')
     let g:cmdbuf_buffer_size = 1
 endif
@@ -89,7 +86,7 @@ if !g:cmdbuf_no_default_autocmd
     augroup cmdbuf
         autocmd!
 
-        execute 'autocmd BufEnter' g:cmdbuf_buffer_name 'call s:set_up_mappings()'
+        autocmd BufEnter __command_buffer__ call s:set_up_mappings()
     augroup END
 
     " Map if rhs has not mapped.
