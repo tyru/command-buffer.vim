@@ -93,15 +93,29 @@ if !g:cmdbuf_no_default_autocmd
     augroup END
 
     func! s:set_up_mappings() "{{{
-        nmap <buffer> <Esc>     <Plug>(cmdbuf-close)
+        if !hasmapto('<Plug>(cmdbuf-close)', 'n')
+            nmap <buffer> <Esc>     <Plug>(cmdbuf-close)
+        endif
 
-        imap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
-        imap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
-        imap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
+        if !hasmapto('<Plug>(cmdbuf-execute-:)', 'i')
+            imap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
+        endif
+        if !hasmapto('<Plug>(cmdbuf-execute-/)', 'i')
+            imap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
+        endif
+        if !hasmapto('<Plug>(cmdbuf-execute-?)', 'i')
+            imap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
+        endif
 
-        imap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
-        imap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
-        imap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+        if !hasmapto('<Plug>(cmdbuf-paste-to-cmdline-:)', 'i')
+            imap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
+        endif
+        if !hasmapto('<Plug>(cmdbuf-paste-to-cmdline-/)', 'i')
+            imap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
+        endif
+        if !hasmapto('<Plug>(cmdbuf-paste-to-cmdline-?)', 'i')
+            imap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+        endif
     endfunc "}}}
 endif
 " }}}
