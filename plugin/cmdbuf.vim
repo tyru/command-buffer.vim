@@ -13,9 +13,6 @@ set cpo&vim
 " }}}
 
 " Global Variables {{{
-if !exists('g:cmdbuf_debug')
-    let g:cmdbuf_debug = 0
-endif
 if !exists('g:cmdbuf_no_default_mappings')
     let g:cmdbuf_no_default_mappings = 0
 endif
