@@ -1,0 +1,129 @@
+*cmdbuf.txt*		コマンドライン用バッファ
+
+Version: 0.0.0
+Author : tyru <tyru.exe@gmail.com>
+NEW BSD LICENSE {{{
+  Copyright (c) 2009, tyru
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+      * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+      * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+      * Neither the name of the tyru nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+}}}
+
+
+==============================================================================
+CONTENS						*cmdbuf-contents*
+
+概要							|cmdbuf-introduction|
+インターフェース				|cmdbuf-interface|
+  マッピング					|cmdbuf-default-mappings|
+  <Plug>付きのマッピング		|cmdbuf-plug-mappings|
+  変数							|cmdbuf-variables|
+Changelog						|cmdbuf-changelog|
+
+
+==============================================================================
+概要					*cmdbuf-introduction*
+
+コマンドラインはインサートモードほどは操作が自由ではありません。
+omni補完のような強力な補完はありませんし、
+何より<Esc>を押せばコマンドラインから離れてしまいます。
+そこで考え方を変えて、編集しずらいコマンドラインで操作するのではなく、
+一旦バッファでコマンドを組み立てて実行すればよいのです。
+このプラグインはその一時バッファとそのためのインターフェースを提供します。
+
+
+==============================================================================
+インターフェース					*cmdbuf-interface*
+
+==============================================================================
+マッピング							*cmdbuf-default-mappings*
+
+	nmap <buffer> <Esc> <Plug>(cmdbuf-close)
+
+	nmap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
+	imap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
+	nmap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
+	imap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
+	nmap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
+	imap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
+
+	nmap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
+	imap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
+	nmap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
+	imap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
+	nmap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+	imap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+
+==============================================================================
+<Plug>付きのマッピング				*cmdbuf-plug-mappings*
+
+<Plug>(cmdbuf-open)			(n)
+	バッファを開きます。
+
+<Plug>(cmdbuf-close)			(ni)
+	バッファを閉じます。
+
+<Plug>(cmdbuf-execute-:)		(ni)
+<Plug>(cmdbuf-execute-/)
+<Plug>(cmdbuf-execute-?)
+	バッファの文字列をコマンドラインに挿入し、エンターを押します。
+
+	最後の文字はコマンドラインのタイプを表していて、
+		:はexコマンド
+		/は前方検索コマンド
+		?は後方検索コマンド
+	をそれぞれ表しています。
+
+<Plug>(cmdbuf-paste-to-cmdline-:)		(ni)
+<Plug>(cmdbuf-paste-to-cmdline-/)
+<Plug>(cmdbuf-paste-to-cmdline-?)
+	バッファの文字列をコマンドラインに挿入します。
+	エンターは押されず、各行の間にはg:cmdbuf_multiline_separator
+	が挟まれて挿入されます。
+
+<Plug>(cmdbuf-open-from-cmdline)		(c)
+	コマンドラインの現在の文字列をバッファに挿入します。
+
+
+==============================================================================
+変数						*cmdbuf-variables*
+
+g:cmdbuf_no_default_mappings				*g:cmdbuf_no_default_mappings*
+									(デフォルト: 0)
+	もしtrueならデフォルトのマッピングを用意しない。
+	*cmdbuf-mappings* 参照。
+
+g:cmdbuf_no_default_autocmd					*g:cmdbuf_no_default_autocmd*
+									(デフォルト: 0)
+	もしtrueならデフォルトのautocmd(BufEnter)を用意しない。
+	*cmdbuf-autocmd* 参照。
+
+g:cmdbuf_buffer_size						*g:cmdbuf_buffer_size*
+									(デフォルト: 1)
+	g:cmdbuf_open_commandの先頭に付けられる数値です。
+
+g:cmdbuf_open_command						*g:cmdbuf_open_command*
+									(デフォルト: "new")
+	バッファを開くコマンドです。
+
+g:cmdbuf_multiline_separator				*g:cmdbuf_multiline_separator*
+									(デフォルト: " | ")
+	<Plug>(cmdbuf-paste-to-cmdline-...)系のマッピングが
+	複数行に渡る時にこの文字列が各行の間に挟まれて
+	コマンドラインに挿入されます。
+
+
+==============================================================================
+Changelog					*cmdbuf-changelog*
+
+See git-log :)
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl:noet:fdm=marker:fen
