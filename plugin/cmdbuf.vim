@@ -108,13 +108,13 @@ if !g:cmdbuf_no_default_autocmd
     func! s:set_up_mappings() "{{{
         call s:map('n', '<buffer>', 1, '<Esc>', '<Plug>(cmdbuf-close)')
 
-        call s:map('i', '<buffer>', 1, '<CR>', '<Plug>(cmdbuf-execute-:)')
-        call s:map('i', '<buffer>', 1, '<C-CR>', '<Plug>(cmdbuf-execute-/)')
-        call s:map('i', '<buffer>', 1, '<S-CR>', '<Plug>(cmdbuf-execute-?)')
+        call s:map('ni', '<buffer>', 1, '<CR>', '<Plug>(cmdbuf-execute-:)')
+        call s:map('ni', '<buffer>', 1, '<C-CR>', '<Plug>(cmdbuf-execute-/)')
+        call s:map('ni', '<buffer>', 1, '<S-CR>', '<Plug>(cmdbuf-execute-?)')
 
-        call s:map('i', '<buffer>', 1, '<C-g>:', '<Plug>(cmdbuf-paste-to-cmdline-:)')
-        call s:map('i', '<buffer>', 1, '<C-g>/', '<Plug>(cmdbuf-paste-to-cmdline-/)')
-        call s:map('i', '<buffer>', 1, '<C-g>?', '<Plug>(cmdbuf-paste-to-cmdline-?)')
+        call s:map('ni', '<buffer>', 1, '<C-g>:', '<Plug>(cmdbuf-paste-to-cmdline-:)')
+        call s:map('ni', '<buffer>', 1, '<C-g>/', '<Plug>(cmdbuf-paste-to-cmdline-/)')
+        call s:map('ni', '<buffer>', 1, '<C-g>?', '<Plug>(cmdbuf-paste-to-cmdline-?)')
     endfunc "}}}
 endif
 " }}}
