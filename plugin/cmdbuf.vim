@@ -92,30 +92,29 @@ if !g:cmdbuf_no_default_autocmd
         execute 'autocmd BufEnter' g:cmdbuf_buffer_name 'call s:set_up_mappings()'
     augroup END
 
+    " Map if rhs has not mapped.
+    func! s:map(modes, options, remap_p, lhs, rhs) "{{{
+        for mode in split(a:modes, '\zs')
+            if !hasmapto(a:rhs, mode)
+                execute
+                \   printf('%s%smap', mode, (a:remap_p ? '' : 'nore'))
+                \   a:options
+                \   a:lhs
+                \   a:rhs
+            endif
+        endfor
+    endfunc "}}}
+
     func! s:set_up_mappings() "{{{
-        if !hasmapto('<Plug>(cmdbuf-close)', 'n')
-            nmap <buffer> <Esc>     <Plug>(cmdbuf-close)
-        endif
+        call s:map('n', '<buffer>', 1, '<Esc>', '<Plug>(cmdbuf-close)')
 
-        if !hasmapto('<Plug>(cmdbuf-execute-:)', 'i')
-            imap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
-        endif
-        if !hasmapto('<Plug>(cmdbuf-execute-/)', 'i')
-            imap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
-        endif
-        if !hasmapto('<Plug>(cmdbuf-execute-?)', 'i')
-            imap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
-        endif
+        call s:map('i', '<buffer>', 1, '<CR>', '<Plug>(cmdbuf-execute-:)')
+        call s:map('i', '<buffer>', 1, '<C-CR>', '<Plug>(cmdbuf-execute-/)')
+        call s:map('i', '<buffer>', 1, '<S-CR>', '<Plug>(cmdbuf-execute-?)')
 
-        if !hasmapto('<Plug>(cmdbuf-paste-to-cmdline-:)', 'i')
-            imap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
-        endif
-        if !hasmapto('<Plug>(cmdbuf-paste-to-cmdline-/)', 'i')
-            imap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
-        endif
-        if !hasmapto('<Plug>(cmdbuf-paste-to-cmdline-?)', 'i')
-            imap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
-        endif
+        call s:map('i', '<buffer>', 1, '<C-g>:', '<Plug>(cmdbuf-paste-to-cmdline-:)')
+        call s:map('i', '<buffer>', 1, '<C-g>/', '<Plug>(cmdbuf-paste-to-cmdline-/)')
+        call s:map('i', '<buffer>', 1, '<C-g>?', '<Plug>(cmdbuf-paste-to-cmdline-?)')
     endfunc "}}}
 endif
 " }}}
