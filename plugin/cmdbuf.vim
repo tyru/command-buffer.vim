@@ -31,6 +31,9 @@ endif
 if !exists('g:cmdbuf_open_command')
     let g:cmdbuf_open_command = 'new'
 endif
+if !exists('g:cmdbuf_multiline_separator')
+    let g:cmdbuf_multiline_separator = ' | '
+endif
 " }}}
 
 " Mappings {{{

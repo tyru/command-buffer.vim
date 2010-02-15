@@ -37,27 +37,25 @@ endfunc "}}}
 " Assumption: This function is called in normal mode.
 func! cmdbuf#execute(cmdtype) "{{{
     for lnum in range(1, line('$'))
-        call s:insert_cmdline(a:cmdtype, getline(lnum) . "\<CR>")
+        call feedkeys(a:cmdtype . getline(lnum) . "\<CR>", 'n')
     endfor
     close!
 endfunc "}}}
 
 " Assumption: This function is called in normal mode.
 func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
+    call feedkeys(a:cmdtype, 'n')
     for lnum in range(1, line('$'))
-        call s:insert_cmdline(a:cmdtype, getline(lnum))
+        if lnum ==# 1
+            let line = getline(lnum)
+        else
+            let line = g:cmdbuf_multiline_separator . getline(lnum)
+        endif
+        call feedkeys(line, 'n')
     endfor
     close!
 endfunc "}}}
 
-
-func! s:insert_cmdline(cmdtype, insert_str) "{{{
-    if a:cmdtype =~# '^[:/?]$'
-        call feedkeys(a:cmdtype . a:insert_str, 'n')
-    else
-        call s:warnf('unknown cmdtype (%s).', a:cmdtype)
-    endif
-endfunc "}}}
 
 func! s:create_jump_buffer() "{{{
     let winnr = bufwinnr(g:cmdbuf_buffer_name)
