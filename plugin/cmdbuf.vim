@@ -89,29 +89,22 @@ if !g:cmdbuf_no_default_autocmd
         autocmd BufEnter __command_buffer__ call s:set_up_mappings()
     augroup END
 
-    " Map if rhs has not mapped.
-    func! s:map(modes, options, remap_p, lhs, rhs) "{{{
-        for mode in split(a:modes, '\zs')
-            if !hasmapto(a:rhs, mode)
-                execute
-                \   printf('%s%smap', mode, (a:remap_p ? '' : 'nore'))
-                \   a:options
-                \   a:lhs
-                \   a:rhs
-            endif
-        endfor
-    endfunc "}}}
-
     func! s:set_up_mappings() "{{{
-        call s:map('n', '<buffer>', 1, '<Esc>', '<Plug>(cmdbuf-close)')
+        silent! nmap <buffer><unique> <Esc>     <Plug>(cmdbuf-close)
 
-        call s:map('ni', '<buffer>', 1, '<CR>', '<Plug>(cmdbuf-execute-:)')
-        call s:map('ni', '<buffer>', 1, '<C-CR>', '<Plug>(cmdbuf-execute-/)')
-        call s:map('ni', '<buffer>', 1, '<S-CR>', '<Plug>(cmdbuf-execute-?)')
+        silent! nmap <buffer><unique> <CR>      <Plug>(cmdbuf-execute-:)
+        silent! imap <buffer><unique> <CR>      <Plug>(cmdbuf-execute-:)
+        silent! nmap <buffer><unique> <C-CR>    <Plug>(cmdbuf-execute-/)
+        silent! imap <buffer><unique> <C-CR>    <Plug>(cmdbuf-execute-/)
+        silent! nmap <buffer><unique> <S-CR>    <Plug>(cmdbuf-execute-?)
+        silent! imap <buffer><unique> <S-CR>    <Plug>(cmdbuf-execute-?)
 
-        call s:map('ni', '<buffer>', 1, '<C-g>:', '<Plug>(cmdbuf-paste-to-cmdline-:)')
-        call s:map('ni', '<buffer>', 1, '<C-g>/', '<Plug>(cmdbuf-paste-to-cmdline-/)')
-        call s:map('ni', '<buffer>', 1, '<C-g>?', '<Plug>(cmdbuf-paste-to-cmdline-?)')
+        silent! nmap <buffer><unique> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
+        silent! imap <buffer><unique> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
+        silent! nmap <buffer><unique> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
+        silent! imap <buffer><unique> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
+        silent! nmap <buffer><unique> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+        silent! imap <buffer><unique> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
     endfunc "}}}
 endif
 " }}}
