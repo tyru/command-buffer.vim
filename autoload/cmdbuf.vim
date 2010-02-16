@@ -77,6 +77,7 @@ func! s:set_up_buffer() "{{{
     setlocal buftype=nofile
     setlocal nobuflisted
     setlocal noswapfile
+    setfiletype vim
 endfunc "}}}
 " }}}
 
