@@ -60,8 +60,25 @@ omni補完のような強力な補完はありませんし、
 	nmap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
 	imap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
 
+
+									*cmdbuf-customize-mappings*
+これらのマッピングはデフォルトのものであり、
+ユーザは自由に変えることができます。
+変える場合は次のようにします。
+<buffer>を付けないと他のバッファでも
+マッピングされてしまうので気をつけてください。
+
+	autocmd BufEnter __command_buffer__ call s:cmdbuf_mappings()
+
+	func! s:cmdbuf_mappings()
+		imap <buffer> <Esc> <Plug>(cmdbuf-close)
+	endfunc
+
 ==============================================================================
 <Plug>付きのマッピング				*cmdbuf-plug-mappings*
+
+右の文字はモードを表しています。
+
 
 <Plug>(cmdbuf-open)			(n)
 	バッファを開きます。
