@@ -90,21 +90,21 @@ if !g:cmdbuf_no_default_autocmd
     augroup END
 
     func! s:set_up_mappings() "{{{
-        silent! nmap <buffer><unique> <Esc>     <Plug>(cmdbuf-close)
+        nmap <buffer> <Esc>     <Plug>(cmdbuf-close)
 
-        silent! nmap <buffer><unique> <CR>      <Plug>(cmdbuf-execute-:)
-        silent! imap <buffer><unique> <CR>      <Plug>(cmdbuf-execute-:)
-        silent! nmap <buffer><unique> <C-CR>    <Plug>(cmdbuf-execute-/)
-        silent! imap <buffer><unique> <C-CR>    <Plug>(cmdbuf-execute-/)
-        silent! nmap <buffer><unique> <S-CR>    <Plug>(cmdbuf-execute-?)
-        silent! imap <buffer><unique> <S-CR>    <Plug>(cmdbuf-execute-?)
+        nmap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
+        imap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
+        nmap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
+        imap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
+        nmap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
+        imap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
 
-        silent! nmap <buffer><unique> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
-        silent! imap <buffer><unique> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
-        silent! nmap <buffer><unique> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
-        silent! imap <buffer><unique> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
-        silent! nmap <buffer><unique> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
-        silent! imap <buffer><unique> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+        nmap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
+        imap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
+        nmap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
+        imap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
+        nmap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+        imap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
     endfunc "}}}
 endif
 " }}}
