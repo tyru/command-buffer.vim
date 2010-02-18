@@ -13,22 +13,17 @@ endfunc "}}}
 
 
 " Assumption: This function is called in normal mode.
-func! cmdbuf#open(...) "{{{
+func! cmdbuf#open(cmdtype, ...) "{{{
     let insert_str = a:0 != 0 ? a:1 : ''
 
-    call s:set_up()
-
-    if insert_str != ''
-        call setline(1, insert_str)
-    endif
-    call feedkeys('A', 'n')
+    call s:set_up(a:cmdtype, insert_str)
 
     return ''    " for '<Plug>(cmdbuf-open-from-cmdline)'.
 endfunc "}}}
 
 " Assumption: This function is called in '<C-\>e'.
 func! cmdbuf#open_from_cmdline() "{{{
-    let keys = printf("\<Esc>:\<C-u>call cmdbuf#open(%s)\<CR>", string(getcmdline()))
+    let keys = printf("\<Esc>:\<C-u>call cmdbuf#open(%s, %s)\<CR>", '":"', string(getcmdline()))
     call feedkeys(keys, 'n')
     return ''
 endfunc "}}}
@@ -60,14 +55,17 @@ func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
 endfunc "}}}
 
 
-func! s:set_up() "{{{
+func! s:set_up(cmdtype, insert_str) "{{{
     let BUF_NAME = '__command_buffer__'
     let winnr = bufwinnr(BUF_NAME)
+
     if winnr != -1    " Window is displayed.
         execute winnr . 'wincmd w'
+        call s:insert_new_line('o', a:cmdtype, a:insert_str)
     elseif bufexists(BUF_NAME)    " Buffer exists but is not displayed.
         execute printf('%d%s', g:cmdbuf_buffer_size, g:cmdbuf_open_command)
         execute bufnr(BUF_NAME) . 'buffer'
+        call s:insert_new_line('o', a:cmdtype, a:insert_str)
     else
         " Create (and jump to) buffer.
         execute printf('%d%s', g:cmdbuf_buffer_size, g:cmdbuf_open_command)
@@ -77,6 +75,7 @@ func! s:set_up() "{{{
         execute 'doautocmd BufEnter' BUF_NAME
         " Set misc. options.
         call s:set_up_options()
+        call s:insert_new_line('A', a:cmdtype, a:insert_str)
     endif
 endfunc "}}}
 
@@ -86,6 +85,11 @@ func! s:set_up_options() "{{{
     setlocal nobuflisted
     setlocal noswapfile
     setfiletype vim
+endfunc "}}}
+
+func! s:insert_new_line(jump, cmdtype, insert_str) "{{{
+    call cursor(line('$'), 1)
+    call feedkeys(printf('%s%s%s', a:jump, a:cmdtype, a:insert_str), 'n')
 endfunc "}}}
 
 

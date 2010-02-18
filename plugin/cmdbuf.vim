@@ -31,11 +31,6 @@ endif
 " }}}
 
 " Mappings {{{
-nnoremap
-\   <silent>
-\   <Plug>(cmdbuf-open)
-\   :<C-u>call cmdbuf#open()<CR>
-
 inoremap
 \   <silent>
 \   <Plug>(cmdbuf-close)
@@ -46,6 +41,12 @@ nnoremap
 \   :<C-u>close<CR>
 
 for s:cmdtype in [':', '/', '?']
+    execute
+    \   'nnoremap'
+    \   '<silent>'
+    \   printf('<Plug>(cmdbuf-open-%s)', s:cmdtype)
+    \   printf(':<C-u>call cmdbuf#open(%s)<CR>', string(s:cmdtype))
+
     execute
     \   'inoremap'
     \   '<silent>'
@@ -77,7 +78,9 @@ cnoremap
 
 
 if !g:cmdbuf_no_default_mappings
-    nmap g: <Plug>(cmdbuf-open)
+    nmap g: <Plug>(cmdbuf-open-:)
+    nmap g/ <Plug>(cmdbuf-open-/)
+    nmap g? <Plug>(cmdbuf-open-?)
 endif
 " }}}
 
