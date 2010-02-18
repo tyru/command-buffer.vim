@@ -64,7 +64,7 @@ func! s:create_jump_buffer() "{{{
         " Create (and jump to) buffer.
         execute printf('%d%s', g:cmdbuf_buffer_size, g:cmdbuf_open_command)
         " Name current buffer.
-        file `=BUF_NAME`
+        silent file `=BUF_NAME`
         " Execute BufEnter autocmd.
         execute 'doautocmd BufEnter' BUF_NAME
     else
