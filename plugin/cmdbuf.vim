@@ -48,6 +48,12 @@ for s:cmdtype in [':', '/', '?']
     \   printf(':<C-u>call cmdbuf#open(%s)<CR>', string(s:cmdtype))
 
     execute
+    \   'cnoremap'
+    \   '<silent>'
+    \   printf('<Plug>(cmdbuf-open-from-cmdline-%s)', s:cmdtype)
+    \   printf('<C-\>e cmdbuf#open_from_cmdline(%s)<CR>', string(s:cmdtype))
+
+    execute
     \   'inoremap'
     \   '<silent>'
     \   printf('<Plug>(cmdbuf-execute-%s)', s:cmdtype)
@@ -71,16 +77,15 @@ for s:cmdtype in [':', '/', '?']
 endfor
 unlet s:cmdtype
 
-cnoremap
-\   <silent>
-\   <Plug>(cmdbuf-open-from-cmdline)
-\   <C-\>e cmdbuf#open_from_cmdline()<CR>
-
 
 if !g:cmdbuf_no_default_mappings
     nmap g: <Plug>(cmdbuf-open-:)
     nmap g/ <Plug>(cmdbuf-open-/)
     nmap g? <Plug>(cmdbuf-open-?)
+
+    cmap <C-g>: <Plug>(cmdbuf-open-from-cmdline-:)
+    cmap <C-g>/ <Plug>(cmdbuf-open-from-cmdline-/)
+    cmap <C-g>? <Plug>(cmdbuf-open-from-cmdline-?)
 endif
 " }}}
 

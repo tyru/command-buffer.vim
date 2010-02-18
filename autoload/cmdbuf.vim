@@ -22,8 +22,12 @@ func! cmdbuf#open(cmdtype, ...) "{{{
 endfunc "}}}
 
 " Assumption: This function is called in '<C-\>e'.
-func! cmdbuf#open_from_cmdline() "{{{
-    let keys = printf("\<Esc>:\<C-u>call cmdbuf#open(%s, %s)\<CR>", '":"', string(getcmdline()))
+func! cmdbuf#open_from_cmdline(cmdtype) "{{{
+    let keys = printf(
+    \   "\<Esc>:\<C-u>call cmdbuf#open(%s, %s)\<CR>",
+    \   string(a:cmdtype),
+    \   string(getcmdline())
+    \)
     call feedkeys(keys, 'n')
     return ''
 endfunc "}}}
