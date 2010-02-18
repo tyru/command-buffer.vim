@@ -35,8 +35,9 @@ endfunc "}}}
 
 " Assumption: This function is called in normal mode.
 func! cmdbuf#execute(cmdtype) "{{{
-    for lnum in range(1, line('$'))
-        call feedkeys(a:cmdtype . getline(lnum) . "\<CR>", 'n')
+    for lnum in s:get_range()
+        let line = substitute(getline(lnum), '^\s*:', '', '')
+        call feedkeys(a:cmdtype . line . "\<CR>", 'n')
     endfor
     close!
 endfunc "}}}
@@ -44,9 +45,9 @@ endfunc "}}}
 " Assumption: This function is called in normal mode.
 func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
     call feedkeys(a:cmdtype, 'n')
-    for lnum in range(1, line('$'))
+    for lnum in s:get_range()
         if lnum ==# 1
-            let line = getline(lnum)
+            let line = substitute(getline(lnum), '^\s*:', '', '')
         else
             let line = g:cmdbuf_multiline_separator . getline(lnum)
         endif
@@ -82,6 +83,19 @@ func! s:set_up_options() "{{{
     setlocal nobuflisted
     setlocal noswapfile
     setfiletype vim
+endfunc "}}}
+
+" Find first command of multi-line from last line.
+func! s:get_range() "{{{
+    let pos = getpos('.')
+    call cursor(line('$'), 1)
+    try
+        let firstline = search('^\s*:', 'bcnW')
+        let firstline = firstline != 0 ? firstline : line('$')
+        return range(firstline, line('$'))
+    finally
+        call setpos('.', pos)
+    endtry
 endfunc "}}}
 " }}}
 
