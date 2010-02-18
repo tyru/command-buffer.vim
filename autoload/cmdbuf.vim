@@ -16,8 +16,7 @@ endfunc "}}}
 func! cmdbuf#open(...) "{{{
     let insert_str = a:0 != 0 ? a:1 : ''
 
-    call s:create_jump_buffer()
-    call s:set_up_buffer()
+    call s:set_up()
 
     if insert_str != ''
         call setline(1, insert_str)
@@ -57,23 +56,28 @@ func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
 endfunc "}}}
 
 
-func! s:create_jump_buffer() "{{{
+func! s:set_up() "{{{
     let BUF_NAME = '__command_buffer__'
     let winnr = bufwinnr(BUF_NAME)
-    if winnr == -1
+    if winnr != -1    " Window is displayed.
+        execute winnr . 'wincmd w'
+    elseif bufexists(BUF_NAME)    " Buffer exists but is not displayed.
+        execute printf('%d%s', g:cmdbuf_buffer_size, g:cmdbuf_open_command)
+        execute bufnr(BUF_NAME) . 'buffer'
+    else
         " Create (and jump to) buffer.
         execute printf('%d%s', g:cmdbuf_buffer_size, g:cmdbuf_open_command)
         " Name current buffer.
         file `=BUF_NAME`
         " Execute BufEnter autocmd.
         execute 'doautocmd BufEnter' BUF_NAME
-    else
-        execute winnr . 'wincmd w'
+        " Set misc. options.
+        call s:set_up_options()
     endif
 endfunc "}}}
 
-func! s:set_up_buffer() "{{{
-    setlocal bufhidden=wipe
+func! s:set_up_options() "{{{
+    setlocal bufhidden=hide
     setlocal buftype=nofile
     setlocal nobuflisted
     setlocal noswapfile
