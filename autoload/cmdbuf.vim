@@ -35,7 +35,7 @@ endfunc "}}}
 
 " Assumption: This function is called in normal mode.
 func! cmdbuf#execute(cmdtype) "{{{
-    for lnum in s:get_range()
+    for lnum in s:get_range(a:cmdtype)
         let line = substitute(getline(lnum), '^\s*:', '', '')
         call feedkeys(a:cmdtype . line . "\<CR>", 'n')
     endfor
@@ -46,7 +46,7 @@ endfunc "}}}
 func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
     call feedkeys(a:cmdtype, 'n')
     let inserted = 0
-    for lnum in s:get_range()
+    for lnum in s:get_range(a:cmdtype)
         if !inserted
             let line = substitute(getline(lnum), '^\s*:', '', '')
         else
@@ -88,7 +88,11 @@ func! s:set_up_options() "{{{
 endfunc "}}}
 
 " Find first command of multi-line from last line.
-func! s:get_range() "{{{
+func! s:get_range(cmdtype) "{{{
+    if a:cmdtype !=# ':'
+        return [line('$')]
+    endif
+
     let pos = getpos('.')
     call cursor(line('$'), 1)
     try
