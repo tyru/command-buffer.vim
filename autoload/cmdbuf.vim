@@ -45,13 +45,15 @@ endfunc "}}}
 " Assumption: This function is called in normal mode.
 func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
     call feedkeys(a:cmdtype, 'n')
+    let inserted = 0
     for lnum in s:get_range()
-        if lnum ==# 1
+        if !inserted
             let line = substitute(getline(lnum), '^\s*:', '', '')
         else
             let line = g:cmdbuf_multiline_separator . getline(lnum)
         endif
         call feedkeys(line, 'n')
+        let inserted = 1
     endfor
     close!
 endfunc "}}}
