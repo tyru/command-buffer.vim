@@ -24,6 +24,7 @@ CONTENS						*cmdbuf-contents*
   マッピング					|cmdbuf-default-mappings|
   <Plug>付きのマッピング		|cmdbuf-plug-mappings|
   変数							|cmdbuf-variables|
+TODO							|cmdbuf-todo|
 Changelog						|cmdbuf-changelog|
 
 
@@ -136,6 +137,22 @@ g:cmdbuf_multiline_separator				*g:cmdbuf_multiline_separator*
 	<Plug>(cmdbuf-paste-to-cmdline-...)系のマッピングが
 	複数行に渡る時にこの文字列が各行の間に挟まれて
 	コマンドラインに挿入されます。
+
+
+==============================================================================
+TODO						*cmdbuf-todo*
+
+- コマンドラインから現在のcmdtypeでバッファを開く
+- コマンド名の補完とそのコマンドの補完
+	- :commandの出力をパースする
+		- コマンド名のリスト
+			- 全部は重いし無駄？
+		- 補完の種類
+- 上の複数行のコマンドの件で、実行されるコマンドが
+  シンタックスハイライトされてると分かりやすい
+- コマンド履歴をとってくる？
+- indentファイル
+	- :が先頭にあった場合は次行は空白を空けてくれる
 
 
 ==============================================================================
