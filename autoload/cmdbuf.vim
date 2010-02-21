@@ -113,7 +113,7 @@ endfunc "}}}
 
 func! s:get_firstline_number() "{{{
     let lnum = line('$')
-    while lnum != 1
+    while lnum != 0
         let m = matchstr(getline(lnum), '^[:/?]')
         if m != ''
             return [lnum, m]
