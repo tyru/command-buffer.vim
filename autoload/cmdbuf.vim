@@ -32,23 +32,26 @@ func! cmdbuf#open_from_cmdline(cmdtype) "{{{
     return ''
 endfunc "}}}
 
+
 " Assumption: This function is called in normal mode.
-func! cmdbuf#execute(cmdtype) "{{{
-    for line in s:get_lines(a:cmdtype)
-        call feedkeys(a:cmdtype . line . "\<CR>", 'n')
+func! cmdbuf#execute() "{{{
+    let [lnum, cmdtype] = s:get_firstline_number()
+    for line in s:get_lines(lnum, cmdtype)
+        call feedkeys(cmdtype . line . "\<CR>", 'n')
     endfor
 
     close!
 endfunc "}}}
 
 " Assumption: This function is called in normal mode.
-func! cmdbuf#paste_to_cmdline(cmdtype) "{{{
-    let lines = s:get_lines(a:cmdtype)
+func! cmdbuf#paste_to_cmdline() "{{{
+    let [lnum, cmdtype] = s:get_firstline_number()
+    let lines = s:get_lines(lnum, cmdtype)
     let i = 0
     while i < len(lines)
         let line = lines[i]
         if i ==# 0
-            call feedkeys(a:cmdtype . line, 'n')
+            call feedkeys(cmdtype . line, 'n')
         else
             call feedkeys(g:cmdbuf_multiline_separator . line, 'n')
         endif
@@ -97,27 +100,22 @@ func! s:insert_new_line(jump, cmdtype, insert_str) "{{{
 endfunc "}}}
 
 
-func! s:get_lines(cmdtype) "{{{
-    if a:cmdtype !=# ':'
-        return [getline('$')]
-    else
-        let [first; rest] = map(s:get_range(a:cmdtype), 'getline(v:val)')
-        let first = substitute(first, '^\s*:', '', '')
-        return [first] + rest
-    endif
+func! s:get_firstline_number() "{{{
+    let lnum = line('$')
+    while lnum != 1
+        let m = matchstr(getline(lnum), '^[:/?]')
+        if m != ''
+            return [lnum, m]
+        endif
+        let lnum -= 1
+    endwhile
+    return [line('$'), '']
 endfunc "}}}
 
-" Find first command of multi-line from last line.
-func! s:get_range(cmdtype) "{{{
-    let pos = getpos('.')
-    call cursor(line('$'), 1)
-    try
-        let firstline = search('^\s*:', 'bcnW')
-        let firstline = firstline != 0 ? firstline : line('$')
-        return range(firstline, line('$'))
-    finally
-        call setpos('.', pos)
-    endtry
+func! s:get_lines(firstlnum, cmdtype) "{{{
+    let [first; rest] = map(range(a:firstlnum, line('$')), 'getline(v:val)')
+    let first = strpart(first, strlen(a:cmdtype))
+    return [first] + rest
 endfunc "}}}
 " }}}
 
