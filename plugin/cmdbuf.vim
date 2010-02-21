@@ -40,6 +40,24 @@ nnoremap
 \   <Plug>(cmdbuf-close)
 \   :<C-u>close<CR>
 
+inoremap
+\   <silent>
+\   <Plug>(cmdbuf-execute)
+\   <Esc>:<C-u>call cmdbuf#execute()<CR>
+nnoremap
+\   <silent>
+\   <Plug>(cmdbuf-execute)
+\   :<C-u>call cmdbuf#execute()<CR>
+
+inoremap
+\   <silent>
+\   <Plug>(cmdbuf-paste-to-cmdline)
+\   <Esc>:<C-u>call cmdbuf#paste_to_cmdline()<CR>
+nnoremap
+\   <silent>
+\   <Plug>(cmdbuf-paste-to-cmdline)
+\   :<C-u>call cmdbuf#paste_to_cmdline()<CR>
+
 for s:cmdtype in [':', '/', '?']
     execute
     \   'nnoremap'
@@ -52,28 +70,6 @@ for s:cmdtype in [':', '/', '?']
     \   '<silent>'
     \   printf('<Plug>(cmdbuf-open-from-cmdline-%s)', s:cmdtype)
     \   printf('<C-\>e cmdbuf#open_from_cmdline(%s)<CR>', string(s:cmdtype))
-
-    execute
-    \   'inoremap'
-    \   '<silent>'
-    \   printf('<Plug>(cmdbuf-execute-%s)', s:cmdtype)
-    \   printf('<Esc>:<C-u>call cmdbuf#execute(%s)<CR>', string(s:cmdtype))
-    execute
-    \   'nnoremap'
-    \   '<silent>'
-    \   printf('<Plug>(cmdbuf-execute-%s)', s:cmdtype)
-    \   printf(':<C-u>call cmdbuf#execute(%s)<CR>', string(s:cmdtype))
-
-    execute
-    \   'inoremap'
-    \   '<silent>'
-    \   printf('<Plug>(cmdbuf-paste-to-cmdline-%s)', s:cmdtype)
-    \   printf('<Esc>:<C-u>call cmdbuf#paste_to_cmdline(%s)<CR>', string(s:cmdtype))
-    execute
-    \   'nnoremap'
-    \   '<silent>'
-    \   printf('<Plug>(cmdbuf-paste-to-cmdline-%s)', s:cmdtype)
-    \   printf(':<C-u>call cmdbuf#paste_to_cmdline(%s)<CR>', string(s:cmdtype))
 endfor
 unlet s:cmdtype
 
@@ -100,19 +96,11 @@ if !g:cmdbuf_no_default_autocmd
     func! s:set_up_mappings() "{{{
         nmap <buffer> <Esc>     <Plug>(cmdbuf-close)
 
-        nmap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
-        imap <buffer> <CR>      <Plug>(cmdbuf-execute-:)
-        nmap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
-        imap <buffer> <C-CR>    <Plug>(cmdbuf-execute-/)
-        nmap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
-        imap <buffer> <S-CR>    <Plug>(cmdbuf-execute-?)
+        nmap <buffer> <CR>      <Plug>(cmdbuf-execute)
+        imap <buffer> <CR>      <Plug>(cmdbuf-execute)
 
-        nmap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
-        imap <buffer> <C-g>:    <Plug>(cmdbuf-paste-to-cmdline-:)
-        nmap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
-        imap <buffer> <C-g>/    <Plug>(cmdbuf-paste-to-cmdline-/)
-        nmap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
-        imap <buffer> <C-g>?    <Plug>(cmdbuf-paste-to-cmdline-?)
+        nmap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste-to-cmdline)
+        imap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste-to-cmdline)
     endfunc "}}}
 endif
 " }}}
