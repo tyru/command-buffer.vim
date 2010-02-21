@@ -99,6 +99,7 @@ func! s:set_up_options() "{{{
     setlocal buftype=nofile
     setlocal nobuflisted
     setlocal noswapfile
+    " TODO setfiletype cmdbuf
     setfiletype vim
 endfunc "}}}
 
