@@ -62,7 +62,8 @@ func! cmdbuf#paste(...) "{{{
         if i ==# 0
             call feedkeys(cmdtype . line, 'n')
         else
-            call feedkeys(g:cmdbuf_multiline_separator . line, 'n')
+            let sep = get(g:cmdbuf_multiline_separator, cmdtype, ' ')
+            call feedkeys(sep . line, 'n')
         endif
         let i += 1
     endwhile
