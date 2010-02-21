@@ -63,12 +63,12 @@ nnoremap
 
 inoremap
 \   <silent>
-\   <Plug>(cmdbuf-paste)
-\   <Esc>:<C-u>call cmdbuf#paste()<CR>
+\   <Plug>(cmdbuf-insert)
+\   <Esc>:<C-u>call cmdbuf#insert()<CR>
 nnoremap
 \   <silent>
-\   <Plug>(cmdbuf-paste)
-\   :<C-u>call cmdbuf#paste()<CR>
+\   <Plug>(cmdbuf-insert)
+\   :<C-u>call cmdbuf#insert()<CR>
 
 for s:cmdtype in [':', '/', '?']
     " From cmdbuf.
@@ -86,13 +86,13 @@ for s:cmdtype in [':', '/', '?']
     execute
     \   'inoremap'
     \   '<silent>'
-    \   printf('<Plug>(cmdbuf-paste-%s)', s:cmdtype)
-    \   printf('<Esc>:<C-u>call cmdbuf#paste(%s)<CR>', string(s:cmdtype))
+    \   printf('<Plug>(cmdbuf-insert-%s)', s:cmdtype)
+    \   printf('<Esc>:<C-u>call cmdbuf#insert(%s)<CR>', string(s:cmdtype))
     execute
     \   'nnoremap'
     \   '<silent>'
-    \   printf('<Plug>(cmdbuf-paste-%s)', s:cmdtype)
-    \   printf(':<C-u>call cmdbuf#paste(%s)<CR>', string(s:cmdtype))
+    \   printf('<Plug>(cmdbuf-insert-%s)', s:cmdtype)
+    \   printf(':<C-u>call cmdbuf#insert(%s)<CR>', string(s:cmdtype))
 
     " From normal mode, out of cmdbuf.
     execute
@@ -142,14 +142,14 @@ if !g:cmdbuf_no_default_autocmd
         nmap <buffer> <C-o>?    <Plug>(cmdbuf-execute-?)
         imap <buffer> <C-o>?    <Plug>(cmdbuf-execute-?)
 
-        nmap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste)
-        imap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste)
-        nmap <buffer> <C-g>:        <Plug>(cmdbuf-paste-:)
-        imap <buffer> <C-g>:        <Plug>(cmdbuf-paste-:)
-        nmap <buffer> <C-g>/        <Plug>(cmdbuf-paste-/)
-        imap <buffer> <C-g>/        <Plug>(cmdbuf-paste-/)
-        nmap <buffer> <C-g>?        <Plug>(cmdbuf-paste-?)
-        imap <buffer> <C-g>?        <Plug>(cmdbuf-paste-?)
+        nmap <buffer> <C-g><C-g>    <Plug>(cmdbuf-insert)
+        imap <buffer> <C-g><C-g>    <Plug>(cmdbuf-insert)
+        nmap <buffer> <C-g>:        <Plug>(cmdbuf-insert-:)
+        imap <buffer> <C-g>:        <Plug>(cmdbuf-insert-:)
+        nmap <buffer> <C-g>/        <Plug>(cmdbuf-insert-/)
+        imap <buffer> <C-g>/        <Plug>(cmdbuf-insert-/)
+        nmap <buffer> <C-g>?        <Plug>(cmdbuf-insert-?)
+        imap <buffer> <C-g>?        <Plug>(cmdbuf-insert-?)
     endfunc "}}}
 endif
 " }}}

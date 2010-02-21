@@ -52,7 +52,7 @@ func! cmdbuf#execute(...) "{{{
 endfunc "}}}
 
 " Assumption: This function is called in normal mode.
-func! cmdbuf#paste(...) "{{{
+func! cmdbuf#insert(...) "{{{
     let [lnum, cmdtype] = s:get_firstline_number()
     let cmdtype = a:0 != 0 ? a:1 : cmdtype
     let lines = s:get_lines(lnum, cmdtype)
