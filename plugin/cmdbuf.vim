@@ -60,6 +60,12 @@ nnoremap
 \   <Plug>(cmdbuf-paste)
 \   :<C-u>call cmdbuf#paste()<CR>
 
+" From command-line.
+cnoremap
+\   <silent>
+\   <Plug>(cmdbuf-open-from-current)
+\   <C-\>e cmdbuf#open_from_current()<CR>
+
 for s:cmdtype in [':', '/', '?']
     " From normal mode, out of cmdbuf.
     execute
@@ -83,9 +89,10 @@ if !g:cmdbuf_no_default_mappings
     nmap g/ <Plug>(cmdbuf-open-/)
     nmap g? <Plug>(cmdbuf-open-?)
 
-    cmap <C-g>: <Plug>(cmdbuf-open-from-:)
-    cmap <C-g>/ <Plug>(cmdbuf-open-from-/)
-    cmap <C-g>? <Plug>(cmdbuf-open-from-?)
+    cmap <C-g><C-g> <Plug>(cmdbuf-open-from-current)
+    cmap <C-g>:     <Plug>(cmdbuf-open-from-:)
+    cmap <C-g>/     <Plug>(cmdbuf-open-from-/)
+    cmap <C-g>?     <Plug>(cmdbuf-open-from-?)
 endif
 " }}}
 

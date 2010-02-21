@@ -36,6 +36,16 @@ func! cmdbuf#open_from(cmdtype) "{{{
     call feedkeys(keys, 'n')
     return ''
 endfunc "}}}
+
+" Assumption: This function is called in '<C-\>e'.
+func! cmdbuf#open_from_current() "{{{
+    let cmdtype = getcmdtype()
+    let lhs     = printf('<Plug>(cmdbuf-open-from-%s)', cmdtype)
+    if maparg(lhs, 'c') != ''
+        return cmdbuf#open_from(cmdtype)
+    endif
+    return ''
+endfunc "}}}
 " }}}
 
 " From cmdbuf. {{{
