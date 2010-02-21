@@ -20,7 +20,7 @@ if !exists('g:cmdbuf_no_default_autocmd')
     let g:cmdbuf_no_default_autocmd = 0
 endif
 if !exists('g:cmdbuf_buffer_size')
-    let g:cmdbuf_buffer_size = 1
+    let g:cmdbuf_buffer_size = 5
 endif
 if !exists('g:cmdbuf_open_command')
     let g:cmdbuf_open_command = 'new'
