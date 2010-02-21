@@ -51,12 +51,12 @@ nnoremap
 
 inoremap
 \   <silent>
-\   <Plug>(cmdbuf-paste-to-cmdline)
-\   <Esc>:<C-u>call cmdbuf#paste_to_cmdline()<CR>
+\   <Plug>(cmdbuf-paste)
+\   <Esc>:<C-u>call cmdbuf#paste()<CR>
 nnoremap
 \   <silent>
-\   <Plug>(cmdbuf-paste-to-cmdline)
-\   :<C-u>call cmdbuf#paste_to_cmdline()<CR>
+\   <Plug>(cmdbuf-paste)
+\   :<C-u>call cmdbuf#paste()<CR>
 
 for s:cmdtype in [':', '/', '?']
     execute
@@ -68,8 +68,8 @@ for s:cmdtype in [':', '/', '?']
     execute
     \   'cnoremap'
     \   '<silent>'
-    \   printf('<Plug>(cmdbuf-open-from-cmdline-%s)', s:cmdtype)
-    \   printf('<C-\>e cmdbuf#open_from_cmdline(%s)<CR>', string(s:cmdtype))
+    \   printf('<Plug>(cmdbuf-open-from-%s)', s:cmdtype)
+    \   printf('<C-\>e cmdbuf#open_from(%s)<CR>', string(s:cmdtype))
 endfor
 unlet s:cmdtype
 
@@ -79,9 +79,9 @@ if !g:cmdbuf_no_default_mappings
     nmap g/ <Plug>(cmdbuf-open-/)
     nmap g? <Plug>(cmdbuf-open-?)
 
-    cmap <C-g>: <Plug>(cmdbuf-open-from-cmdline-:)
-    cmap <C-g>/ <Plug>(cmdbuf-open-from-cmdline-/)
-    cmap <C-g>? <Plug>(cmdbuf-open-from-cmdline-?)
+    cmap <C-g>: <Plug>(cmdbuf-open-from-:)
+    cmap <C-g>/ <Plug>(cmdbuf-open-from-/)
+    cmap <C-g>? <Plug>(cmdbuf-open-from-?)
 endif
 " }}}
 
@@ -99,8 +99,8 @@ if !g:cmdbuf_no_default_autocmd
         nmap <buffer> <CR>      <Plug>(cmdbuf-execute)
         imap <buffer> <CR>      <Plug>(cmdbuf-execute)
 
-        nmap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste-to-cmdline)
-        imap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste-to-cmdline)
+        nmap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste)
+        imap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste)
     endfunc "}}}
 endif
 " }}}
