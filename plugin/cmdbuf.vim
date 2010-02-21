@@ -31,6 +31,8 @@ endif
 " }}}
 
 " Mappings {{{
+
+" From cmdbuf.
 inoremap
 \   <silent>
 \   <Plug>(cmdbuf-close)
@@ -59,12 +61,14 @@ nnoremap
 \   :<C-u>call cmdbuf#paste()<CR>
 
 for s:cmdtype in [':', '/', '?']
+    " From normal mode, out of cmdbuf.
     execute
     \   'nnoremap'
     \   '<silent>'
     \   printf('<Plug>(cmdbuf-open-%s)', s:cmdtype)
     \   printf(':<C-u>call cmdbuf#open(%s)<CR>', string(s:cmdtype))
 
+    " From command-line.
     execute
     \   'cnoremap'
     \   '<silent>'

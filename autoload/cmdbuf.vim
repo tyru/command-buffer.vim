@@ -12,6 +12,8 @@ func! cmdbuf#load() "{{{
 endfunc "}}}
 
 
+" From normal mode, out of cmdbuf. {{{
+
 " Assumption: This function is called in normal mode.
 func! cmdbuf#open(cmdtype, ...) "{{{
     let insert_str = a:0 != 0 ? a:1 : ''
@@ -20,6 +22,9 @@ func! cmdbuf#open(cmdtype, ...) "{{{
 
     return ''    " for '<Plug>(cmdbuf-open-from-cmdline)'.
 endfunc "}}}
+" }}}
+
+" From command-line. {{{
 
 " Assumption: This function is called in '<C-\>e'.
 func! cmdbuf#open_from(cmdtype) "{{{
@@ -31,7 +36,9 @@ func! cmdbuf#open_from(cmdtype) "{{{
     call feedkeys(keys, 'n')
     return ''
 endfunc "}}}
+" }}}
 
+" From cmdbuf. {{{
 
 " Assumption: This function is called in normal mode.
 func! cmdbuf#execute() "{{{
@@ -60,6 +67,7 @@ func! cmdbuf#paste() "{{{
 
     close!
 endfunc "}}}
+" }}}
 
 
 func! s:set_up(cmdtype, insert_str) "{{{
