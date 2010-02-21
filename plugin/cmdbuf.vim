@@ -61,6 +61,18 @@ nnoremap
 \   :<C-u>call cmdbuf#paste()<CR>
 
 for s:cmdtype in [':', '/', '?']
+    " From cmdbuf.
+    execute
+    \   'inoremap'
+    \   '<silent>'
+    \   printf('<Plug>(cmdbuf-execute-%s)', s:cmdtype)
+    \   printf('<Esc>:<C-u>call cmdbuf#execute(%s)<CR>', string(s:cmdtype))
+    execute
+    \   'nnoremap'
+    \   '<silent>'
+    \   printf('<Plug>(cmdbuf-execute-%s)', s:cmdtype)
+    \   printf(':<C-u>call cmdbuf#execute(%s)<CR>', string(s:cmdtype))
+
     " From normal mode, out of cmdbuf.
     execute
     \   'nnoremap'
@@ -102,6 +114,12 @@ if !g:cmdbuf_no_default_autocmd
 
         nmap <buffer> <CR>      <Plug>(cmdbuf-execute)
         imap <buffer> <CR>      <Plug>(cmdbuf-execute)
+        nmap <buffer> <C-o>:    <Plug>(cmdbuf-execute-:)
+        imap <buffer> <C-o>:    <Plug>(cmdbuf-execute-:)
+        nmap <buffer> <C-o>/    <Plug>(cmdbuf-execute-/)
+        imap <buffer> <C-o>/    <Plug>(cmdbuf-execute-/)
+        nmap <buffer> <C-o>?    <Plug>(cmdbuf-execute-?)
+        imap <buffer> <C-o>?    <Plug>(cmdbuf-execute-?)
 
         nmap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste)
         imap <buffer> <C-g><C-g>    <Plug>(cmdbuf-paste)

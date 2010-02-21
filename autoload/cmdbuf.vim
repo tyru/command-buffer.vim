@@ -41,8 +41,9 @@ endfunc "}}}
 " From cmdbuf. {{{
 
 " Assumption: This function is called in normal mode.
-func! cmdbuf#execute() "{{{
+func! cmdbuf#execute(...) "{{{
     let [lnum, cmdtype] = s:get_firstline_number()
+    let cmdtype = a:0 != 0 ? a:1 : cmdtype
     for line in s:get_lines(lnum, cmdtype)
         call feedkeys(cmdtype . line . "\<CR>", 'n')
     endfor
@@ -51,8 +52,9 @@ func! cmdbuf#execute() "{{{
 endfunc "}}}
 
 " Assumption: This function is called in normal mode.
-func! cmdbuf#paste() "{{{
+func! cmdbuf#paste(...) "{{{
     let [lnum, cmdtype] = s:get_firstline_number()
+    let cmdtype = a:0 != 0 ? a:1 : cmdtype
     let lines = s:get_lines(lnum, cmdtype)
     let i = 0
     while i < len(lines)
