@@ -80,10 +80,16 @@ omni補完のような強力な補完はありませんし、
 ==============================================================================
 <Plug>付きのマッピング				*cmdbuf-plug-mappings*
 
-右の文字はモードを表しています。
+いくつかのマッピングの末尾の文字は
+コマンドラインのモードを表しています。
+- :はexコマンド
+- /は前方検索コマンド
+- ?は後方検索コマンド
 
 
-<Plug>(cmdbuf-open)			(n)
+<Plug>(cmdbuf-open-:)			(n)
+<Plug>(cmdbuf-open-/)
+<Plug>(cmdbuf-open-?)
 	バッファを開きます。
 
 <Plug>(cmdbuf-close)			(ni)
@@ -92,22 +98,24 @@ omni補完のような強力な補完はありませんし、
 <Plug>(cmdbuf-execute-:)		(ni)
 <Plug>(cmdbuf-execute-/)
 <Plug>(cmdbuf-execute-?)
+<Plug>(cmdbuf-execute)
 	バッファの文字列をコマンドラインに挿入し、エンターを押します。
+	<Plug>(cmdbuf-execute)はバッファにある
+	現在のコマンドラインのタイプで実行します。
 
-	最後の文字はコマンドラインのタイプを表していて、
-		:はexコマンド
-		/は前方検索コマンド
-		?は後方検索コマンド
-	をそれぞれ表しています。
-
-<Plug>(cmdbuf-paste-to-cmdline-:)		(ni)
-<Plug>(cmdbuf-paste-to-cmdline-/)
-<Plug>(cmdbuf-paste-to-cmdline-?)
+<Plug>(cmdbuf-insert-:)		(ni)
+<Plug>(cmdbuf-insert-/)
+<Plug>(cmdbuf-insert-?)
+<Plug>(cmdbuf-insert)
 	バッファの文字列をコマンドラインに挿入します。
 	エンターは押されず、各行の間にはg:cmdbuf_multiline_separator
 	が挟まれて挿入されます。
+	<Plug>(cmdbuf-insert)はバッファにある
+	現在のコマンドラインのタイプで挿入します。
 
-<Plug>(cmdbuf-open-from-cmdline)		(c)
+<Plug>(cmdbuf-open-from-:)		(c)
+<Plug>(cmdbuf-open-from-/)
+<Plug>(cmdbuf-open-from-?)
 	コマンドラインの現在の文字列をバッファに挿入します。
 
 
@@ -142,7 +150,7 @@ g:cmdbuf_multiline_separator				*g:cmdbuf_multiline_separator*
 ==============================================================================
 TODO						*cmdbuf-todo*
 
-- コマンドラインから現在のcmdtypeでバッファを開く
+- <Plug>(cmdbuf-open-from-current)
 - コマンド名の補完とそのコマンドの補完
 	- :commandの出力をパースする
 		- コマンド名のリスト
@@ -153,6 +161,8 @@ TODO						*cmdbuf-todo*
 - コマンド履歴をとってくる？
 - indentファイル
 	- :が先頭にあった場合は次行は空白を空けてくれる
+- 重いのでできるだけ`feedkeys()`使わない
+- bash, zshの^Rの機能
 
 
 ==============================================================================
